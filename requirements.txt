@@ -1,0 +1,22 @@
+# Core App
+streamlit
+langchain
+langchain-groq
+python-dotenv
+
+# Vector Store
+faiss-cpu
+chromadb
+
+# Embeddings + HuggingFace
+sentence-transformers
+huggingface_hub
+
+# PDF Loaders (all options)
+pypdf
+pypdf2
+pdfplumber
+
+# Optional: Local LLM (if you ever want to run Llama/Qwen/Mistral locally)
+transformers
+accelerate
