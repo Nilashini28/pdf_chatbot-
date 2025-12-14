@@ -7,11 +7,13 @@ from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
-from langchain_groq import ChatGroq
+from langchain_google_genai import ChatGoogleGenerativeAI
+
 
 # Load environment variables
 load_dotenv()
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+
 
 
 # -----------------------------------------
@@ -63,14 +65,16 @@ def get_answer(query, vector_db):
     # Prepare context
     context = "\n\n".join([doc.page_content for doc in matched_docs])
 
-    # Initialize Groq LLM (FIXED)
-    llm = ChatGroq(
-        groq_api_key=GROQ_API_KEY,
-        model="llama-3.1-8b-instant",
+    # Initialize Gemini LLM
+    llm = ChatGoogleGenerativeAI(
+        model="gemini-1.5-pro",
+        google_api_key=GEMINI_API_KEY,
         temperature=0.2
     )
 
-    prompt = f"""You are a helpful AI assistant. Use the following context to answer the question.
+    prompt = f"""You are a helpful AI assistant.
+Answer ONLY using the provided context.
+If the answer is not present, say "Not found in the documents."
 
 Context:
 {context}
@@ -126,3 +130,4 @@ def main():
 # Run App
 if __name__ == "__main__":
     main()
+
